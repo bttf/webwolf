@@ -1,0 +1,22 @@
+{
+  "name": "webwolf",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build": "rm -rf ./bin && broccoli build bin",
+    "start": "node ./bin/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bttf",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "firebase": "^2.3.2"
+  },
+  "devDependencies": {
+    "broccoli": "^0.16.9",
+    "broccoli-babel-transpiler": "^5.5.0",
+    "broccoli-funnel": "^1.0.0"
+  }
+}
