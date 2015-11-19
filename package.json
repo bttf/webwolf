@@ -4,19 +4,17 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "rm -rf ./bin && broccoli build bin",
-    "start": "node ./bin/app.js",
+    "start": "node ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "bttf",
   "license": "ISC",
   "dependencies": {
+    "consolidate": "^0.13.1",
     "express": "^4.13.3",
-    "firebase": "^2.3.2"
+    "firebase": "^2.3.2",
+    "handlebars": "^4.0.4",
+    "path": "^0.12.7"
   },
-  "devDependencies": {
-    "broccoli": "^0.16.9",
-    "broccoli-babel-transpiler": "^5.5.0",
-    "broccoli-funnel": "^1.0.0"
-  }
+  "devDependencies": {}
 }
