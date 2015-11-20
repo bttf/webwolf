@@ -11,6 +11,7 @@ module.exports = function(socket) {
 
   socket.on('disconnect', function() {
     console.log('user gone!');
+    deleteUser(id);
   });
 };
 
@@ -20,4 +21,8 @@ function setUsername(id, name, socket) {
   }, function() {
     socket.emit('isRegistered');
   });
+}
+
+function deleteUser(id) {
+  fbClient.child(`users/${id}`).remove();
 }
