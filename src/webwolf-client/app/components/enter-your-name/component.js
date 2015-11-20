@@ -4,8 +4,9 @@ export default Ember.Component.extend({
   username: '',
   isRegistered: false,
   willInsertElement() {
-    this.get('io').on('isRegistered', () => {
+    this.get('io').on('isRegistered', (name) => {
       this.set('isRegistered', true);
+      this.sendAction('registrationSuccess', name);
     });
   },
   actions: {

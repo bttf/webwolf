@@ -1,5 +1,5 @@
 <div class="container">
-  {{enter-your-name io=io}}
+  {{enter-your-name io=io registrationSuccess="setRegistered"}}
 
-  {{game-arena io=io gameId=gameId}}
+  {{game-arena io=io gameId=gameId username=username isRegistered=isRegistered goToGame="transitionToGame"}}
 </div>

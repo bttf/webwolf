@@ -1,4 +1,13 @@
-{{#unless gameId}}
-{{else}}
-<h1>GAME {{gameId}}</h1>
-{{/unless}}
+{{#if isRegistered}}
+  {{#unless gameId}}
+  <button class="btn btn-warning" {{action "startNewGame" username}}><h1>NEW GAME</h1></button>
+  {{else}}
+  <h1>GAME {{gameId}}</h1>
+  <hr>
+  <ul>
+    {{#each players as |player|}}
+      <h4>{{player}}</h4>
+    {{/each}}
+  </ul>
+  {{/unless}}
+{{/if}}
