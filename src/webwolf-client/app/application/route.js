@@ -5,4 +5,9 @@ export default Ember.Route.extend({
   setupController(controller/*, model*/) {
     controller.set('io', this.get('io').socketFor('http://localhost:3000'));
   },
+  actions: {
+    setGameId(id) {
+      this.controllerFor('application').set('gameId', id);
+    },
+  },
 });
