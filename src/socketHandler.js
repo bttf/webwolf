@@ -46,6 +46,7 @@ function createNewGame(id, username, socket) {
   }, function() {
     socket.emit('gameCreated', gameId);
     fbClient.child(`games/${gameId}/users`).on('value', (snapshot) => {
+      console.log('fbClient on value (createNewGame)');
       socket.emit('gameJoined', snapshot.val());
     });
   });
@@ -55,8 +56,9 @@ function addPlayerToGame(id, gameId, username, socket) {
   fbClient.child(`games/${gameId}/users/${id}`).set({
     name: username,
   }, function() {
-    fbClient.child(`games/${gameId}/users`).on('value', (snapshot) => {
-      socket.emit('gameJoined', snapshot.val());
-    });
+    // fbClient.child(`games/${gameId}/users`).on('value', (snapshot) => {
+    //   console.log('fbClient on value (addPlayerToGame)');
+    //   socket.emit('gameJoined', snapshot.val());
+    // });
   });
 }
