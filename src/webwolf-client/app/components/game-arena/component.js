@@ -9,7 +9,9 @@ export default Ember.Component.extend({
     this.get('io').on('gameCreated', (gameId) => {
       this.sendAction('goToGame', gameId);
     });
+
     this.get('io').on('gameJoined', (players) => {
+      this.get('players').clear();
       Object.keys(players).forEach((key) => {
         if(players.hasOwnProperty(key)) {
           this.get('players').addObject(players[key].name);
