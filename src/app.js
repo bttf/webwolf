@@ -28,7 +28,7 @@ fbClient.child('games').on('child_added', (snapshot) => {
       const socketIds = Object.keys(snapshot.val());
       socketIds.forEach((id) => {
         if (socketMap[id]) {
-          socketMap[id].emit('gameJoined', _.values(snapshot.val()));
+          socketMap[id].emit('gameUpdated', _.values(snapshot.val()));
         }
       });
     }

@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   gameId: '',
-  username: '',
   players: Ember.A([]),
   moderatorSelected: Ember.computed('players.@each', function() {
     console.log('is this getting fired or what');
@@ -17,7 +16,7 @@ export default Ember.Component.extend({
       this.sendAction('goToGame', gameId);
     });
 
-    this.get('io').on('gameJoined', (players) => {
+    this.get('io').on('gameUpdated', (players) => {
       console.log('players payload', players);
       this.get('players').clear();
       players.forEach((player) => {
@@ -28,13 +27,13 @@ export default Ember.Component.extend({
 
   onRegistered: Ember.observer('isRegistered', function() {
     if (this.get('gameId')) {
-      this.get('io').emit('joinGame', { gameId: this.get('gameId'), username: this.get('username') });
+      this.get('io').emit('joinGame', { gameId: this.get('gameId'), user: this.get('user') });
     }
   }),
 
   actions: {
-    startNewGame(username) {
-      this.get('io').emit('newGame', username);
+    startNewGame(user) {
+      this.get('io').emit('newGame', user);
     },
 
     assumeModeratorRole() {

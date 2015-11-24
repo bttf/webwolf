@@ -2,11 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   gameId: '',
-  username: '',
   isRegistered: false,
   actions: {
-    setRegistered(username) {
-      this.set('username', username);
+    setRegistered(user) {
+      this.set('user', user);
       this.set('isRegistered', true);
     },
     transitionToGame(gameId) {

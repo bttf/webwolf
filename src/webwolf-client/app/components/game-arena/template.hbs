@@ -1,6 +1,6 @@
 {{#if isRegistered}}
   {{#unless gameId}}
-  <button class="btn btn-warning" {{action "startNewGame" username}}><h1>NEW GAME</h1></button>
+  <button class="btn btn-warning" {{action "startNewGame" user}}><h1>NEW GAME</h1></button>
   {{else}}
   <div class="row">
     <div class="col-xs-12">
@@ -17,7 +17,7 @@
         {{#if player.isModerator}}
           {{fa-icon "gavel"}}
         {{/if}}
-        {{player.name}}
+        {{player.username}}
       </div>
       {{/each}}
     </div>

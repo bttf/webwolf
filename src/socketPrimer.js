@@ -1,4 +1,3 @@
-'use strict';
 const shortid = require('shortid');
 const fbClient = require('./firebaseClient');
 
@@ -7,29 +6,24 @@ module.exports = function(socket) {
   const id = socket.id;
 
   socket.on('register', (username) => {
-    fbClient.child(`users/${id}`).set({
-      username: username,
-    }, function() {
-      socket.emit('isRegistered', username);
+    const userObj = { id, username };
+    fbClient.child(`users/${id}`).set(userObj, () => {
+      socket.emit('isRegistered', userObj);
     });
   });
 
-  socket.on('newGame', (username) => {
+  socket.on('newGame', (user) => {
     gameId = shortid.generate();
-    fbClient.child(`games/${gameId}/users/${id}`).set({
-      name: username,
-    }, function() {
+    fbClient.child(`games/${gameId}/users/${id}`).set(user, () => {
       socket.emit('gameCreated', gameId);
     });
   });
 
   socket.on('joinGame', (data) => {
     gameId = data.gameId;
-    const username = data.username;
-    console.log('joining game', gameId, username)
-    fbClient.child(`games/${gameId}/users/${id}`).set({
-      name: username,
-    });
+    const user = data.user;
+    console.log('joining game', gameId, user);
+    fbClient.child(`games/${gameId}/users/${id}`).set(user);
   });
 
   socket.on('disconnect', function() {
