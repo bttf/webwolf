@@ -33,10 +33,17 @@ module.exports = function(socket) {
   });
 
   socket.on('disconnect', function() {
+    console.log('somebody closed this shit', id);
     fbClient.child(`users/${id}`).remove();
     if (gameId) {
       fbClient.child(`games/${gameId}/users/${id}`).remove();
     }
+  });
+
+  socket.on('assumeModerator', function() {
+    fbClient.child(`games/${gameId}/users/${id}`).update({
+      isModerator: true,
+    });
   });
 
   return socket;

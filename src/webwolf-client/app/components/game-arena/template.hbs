@@ -2,12 +2,35 @@
   {{#unless gameId}}
   <button class="btn btn-warning" {{action "startNewGame" username}}><h1>NEW GAME</h1></button>
   {{else}}
-  <h1>GAME {{gameId}}</h1>
-  <hr>
-  <ul>
-    {{#each players as |player|}}
-      <h4>{{player}}</h4>
-    {{/each}}
-  </ul>
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>
+        WEREWOLF
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-8">
+      {{#each players as |player|}}
+      <div class="player">
+        {{#if player.isModerator}}
+          {{fa-icon "gavel"}}
+        {{/if}}
+        {{player.name}}
+      </div>
+      {{/each}}
+    </div>
+    <div class="col-xs-4 text-left">
+      Menu
+      <hr>
+      <ul>
+        {{#unless moderatorSelected}}
+        <li><a href="#" {{action "assumeModeratorRole"}}>Assume Moderator Role</a></li>
+        {{/unless}}
+      </ul>
+    </div>
+  </div>
+
   {{/unless}}
 {{/if}}

@@ -1,15 +1,15 @@
 <div class="row enter-your-name">
   <div class="col-xs-12 text-center">
     {{#unless isRegistered}}
-    <h1>PLEASE ENTER YOUR NAME</h1>
+    <h2>PLEASE ENTER YOUR NAME</h2>
     <form {{action "register" username on="submit"}}>
       <div>
         {{input type="text" value=username placeholder="Name" class="username-input form-control"}}
       </div>
-      <button class="btn btn-danger" {{action "register" username}}><h1>OK</h1></button>
+      <button class="btn btn-danger" {{action "register" username}}><h2>OK</h2></button>
     </form>
     {{else}}
-    <h1>{{username}}</h1>
+    <h2>{{username}}</h2>
     {{/unless}}
   </div>
 </div>

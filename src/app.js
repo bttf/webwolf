@@ -5,7 +5,6 @@ const io = require('socket.io')(http);
 const path = require('path');
 const engines = require('consolidate');
 const router = require('./router');
-const apiRouter = require('./apiRouter');
 const socketMap = {};
 const primeSocket = require('./socketPrimer');
 const fbClient = require('./firebaseClient');
@@ -16,7 +15,6 @@ app.set('view engine', 'html');
 app.engine('html', engines.handlebars);
 app.use(express.static(path.join(__dirname, 'webwolf-client/dist')));
 
-app.use('/api', apiRouter);
 app.use('/*', router);
 
 io.on('connection', function(socket) {
@@ -30,7 +28,7 @@ fbClient.child('games').on('child_added', (snapshot) => {
       const socketIds = Object.keys(snapshot.val());
       socketIds.forEach((id) => {
         if (socketMap[id]) {
-          socketMap[id].emit('gameJoined', snapshot.val());
+          socketMap[id].emit('gameJoined', _.values(snapshot.val()));
         }
       });
     }
