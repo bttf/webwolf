@@ -2,20 +2,9 @@
 const shortid = require('shortid');
 const fbClient = require('./firebaseClient');
 
-/**
- * Handle socket events:
- *  - register: create user
- *  - newGame: create game and add user to it
- *  - joinGame: add user to existing game
- *  - disconnect: remove user from game and user itself
- *
- * @param socket
- * @return socket
- */
 module.exports = function(socket) {
   let gameId;
   const id = socket.id;
-  console.log('socket instantiated', socket.id);
 
   socket.on('register', (username) => {
     fbClient.child(`users/${id}`).set({
@@ -37,6 +26,7 @@ module.exports = function(socket) {
   socket.on('joinGame', (data) => {
     gameId = data.gameId;
     const username = data.username;
+    console.log('joining game', gameId, username)
     fbClient.child(`games/${gameId}/users/${id}`).set({
       name: username,
     });

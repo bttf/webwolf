@@ -6,7 +6,7 @@ const path = require('path');
 const engines = require('consolidate');
 const router = require('./router');
 const apiRouter = require('./apiRouter');
-const socketConnections = [];
+const socketMap = {};
 const primeSocket = require('./socketPrimer');
 const fbClient = require('./firebaseClient');
 const _ = require('lodash');
@@ -20,22 +20,20 @@ app.use('/api', apiRouter);
 app.use('/*', router);
 
 io.on('connection', function(socket) {
-  socketConnections.push(primeSocket(socket));
+  socketMap[socket.id] = primeSocket(socket);
 });
 
-// might have to chainge games child_added to on value?
 fbClient.child('games').on('child_added', (snapshot) => {
   const gameId = snapshot.key();
   fbClient.child(`games/${gameId}/users`).on('value', (snapshot) => {
-    const socketIds = _.pluck(socketConnections, 'id');
-    const userIds = Object.keys(snapshot.val());
-    const gameUserIds = _.intersection(socketIds, userIds);
-    const applicableSockets = _.filter(socketConnections, function(socket) {
-      return _.includes(gameUserIds, socket.id);
-    });
-    applicableSockets.forEach((socket) => {
-      socket.emit('gameJoined', snapshot.val());
-    });
+    if (snapshot.val()) {
+      const socketIds = Object.keys(snapshot.val());
+      socketIds.forEach((id) => {
+        if (socketMap[id]) {
+          socketMap[id].emit('gameJoined', snapshot.val());
+        }
+      });
+    }
   });
 });
 
