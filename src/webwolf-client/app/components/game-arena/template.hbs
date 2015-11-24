@@ -4,23 +4,21 @@
   {{else}}
   <div class="row">
     <div class="col-xs-12">
-      <h1>
-        WEREWOLF
-      </h1>
+      <h1>WEREWOLF</h1>
     </div>
   </div>
 
   <div class="row">
     <div class="col-xs-8">
       {{#each players as |player|}}
+
       <div class="player">
-        {{#if player.isModerator}}
-          {{fa-icon "gavel"}}
-        {{/if}}
-        {{player.username}}
+        {{#if player.isModerator}}{{fa-icon "gavel"}}{{/if}} {{player.username}}
       </div>
+
       {{/each}}
     </div>
+
     <div class="col-xs-4 text-left">
       Menu
       <hr>
@@ -28,6 +26,10 @@
         {{#unless moderatorSelected}}
         <li><a href="#" {{action "assumeModeratorRole"}}>Assume Moderator Role</a></li>
         {{/unless}}
+
+        {{#if canStartGame}}
+          <li><a href="#">Start Game</a></li>
+        {{/if}}
       </ul>
     </div>
   </div>

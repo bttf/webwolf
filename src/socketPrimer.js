@@ -2,6 +2,7 @@ const shortid = require('shortid');
 const fbClient = require('./firebaseClient');
 
 module.exports = function(socket) {
+  "use strict";
   let gameId;
   const id = socket.id;
 
@@ -37,6 +38,8 @@ module.exports = function(socket) {
   socket.on('assumeModerator', function() {
     fbClient.child(`games/${gameId}/users/${id}`).update({
       isModerator: true,
+    }, () => {
+      socket.emit('moderatorAssigned');
     });
   });
 

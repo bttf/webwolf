@@ -3,12 +3,17 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   gameId: '',
   players: Ember.A([]),
-  moderatorSelected: Ember.computed('players.@each', function() {
-    console.log('is this getting fired or what');
+  isModerator: false,
+  moderatorSelected: Ember.computed('players.[]', function() {
     return this.get('players').any((player) => {
-      console.log('player.isModerator', player.isModerator);
       return player.isModerator;
     });
+  }),
+  minimumPlayersMet: Ember.computed('players.[]', function() {
+    return this.get('players.length') >= 5;
+  }),
+  canStartGame: Ember.computed('minimumPlayersMet', 'isModerator', function() {
+    return this.get('minimumPlayersMet') && this.get('isModerator');
   }),
 
   willInsertElement() {
@@ -22,6 +27,10 @@ export default Ember.Component.extend({
       players.forEach((player) => {
         this.get('players').addObject(player);
       });
+    });
+
+    this.get('io').on('moderatorAssigned', () => {
+      this.set('isModerator', true);
     });
   },
 
